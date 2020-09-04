@@ -13,11 +13,19 @@ class Issue(GiteeObject):
     def repos_owner_repo_issues_one_url(self, owner, repo, number):
         return self.repos_owner_repo_issues_url(owner=owner, repo=repo) + '/' + number
 
-    def list(self, owner, repo, state='open', sort='created', direction='desc', page=1, per_page=20,
+    # 创建Issue
+    def repos_owner_issues_url(self, owner):
+        return '/repos/{owner}/issues'.format(owner=owner)
+
+    # 更新Issue
+    def repos_owner_issues_update_url(self, owner, number):
+        return self.repos_owner_issues_url(owner=owner) + '/' + number
+
+    def list(self, owner, repo, state='open', sort='created', direction='desc', page=1, per_page=0,
              **kwargs) -> Response:
         """getV5ReposOwnerRepoIssues
 
-        :calls: `GET /repos/:owner/:repo/issues`
+        :calls: `GET /repos/{owner}/{repo}/issues`
         :param owner: 仓库所属空间地址(企业、组织或个人的地址path)
         :type owner: str
         :param repo: 仓库路径(path)
@@ -38,13 +46,15 @@ class Issue(GiteeObject):
         :return: :class:`Response <Response>` object
         :rtype: Response
         """
+        if per_page <= 0:
+            per_page = self.per_page
         args = core.params(locals())
         return self.do_get(self.repos_owner_repo_issues_url(owner, repo), args)
 
     def get(self, owner, repo, number):
         """getV5ReposOwnerRepoIssuesNumber
 
-        :calls: `GET /repos/:owner/:repo/issues/:number`
+        :calls: `GET /repos/{owner}/{repo}/issues/{number}`
         :param owner: 仓库所属空间地址(企业、组织或个人的地址path)
         :type owner: str
         :param repo: 仓库路径(path)
@@ -55,3 +65,35 @@ class Issue(GiteeObject):
         :rtype: Response
         """
         return self.do_get(self.repos_owner_repo_issues_one_url(owner, repo, number))
+
+    def create(self, owner, repo, title, **kwargs):
+        """postV5ReposOwnerIssues
+
+        :calls: `POST /repos/{owner}/issues`
+        :param owner: 仓库所属空间地址(企业、组织或个人的地址path)
+        :type owner: str
+        :param repo: 仓库路径(path)
+        :type repo: str
+        :param title: Issue标题
+        :type title: str
+        :return: :class:`Response <Response>` object
+        :rtype: Response
+        """
+        args = core.params(locals())
+        return self.do_post(self.repos_owner_issues_url(owner), args)
+
+    def update(self, owner, repo, number, **kwargs):
+        """patchV5ReposOwnerIssuesNumber
+
+        :calls: `POST /repos/{owner}/issues/{number}`
+        :param owner: 仓库所属空间地址(企业、组织或个人的地址path)
+        :type owner: str
+        :param repo: 仓库路径(path)
+        :type repo: str
+        :param number: Issue 编号(区分大小写，无需添加 # 号)
+        :type number: str
+        :return: :class:`Response <Response>` object
+        :rtype: Response
+        """
+        args = core.params(locals())
+        return self.do_patch(self.repos_owner_issues_update_url(owner, number), args)

@@ -2,9 +2,16 @@ import textwrap
 
 import setuptools
 
-version = "1.0"
+version = "0.1"
 
+"""
+1. 打包
+python setup.py sdist
 
+2. 上传
+python setup.py sdist upload
+
+"""
 if __name__ == "__main__":
     setuptools.setup(
         name="pygitee",
