@@ -1,38 +1,31 @@
-import setuptools
+# coding: utf-8
+
+
+from setuptools import setup  # noqa: H301
 
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
+NAME = "gitee"
+VERSION = "1.0.0"
+# To install the library, run the following
+#
+# python setup.py install
+#
+# prerequisite: setuptools
+# http://pypi.python.org/pypi/setuptools
 
-version = "0.1"
+REQUIRES = ["urllib3 >= 1.15", "six >= 1.10", "certifi", "python-dateutil"]
 
-"""
-https://docs.python.org/3/distutils/configfile.html
-1. 打包
-python setup.py sdist bdist_wheel
-sdist - 构建源码分发包，在 Windows 下为 zip 格式，Linux 下为 tag.gz 格式 。
-bdist - 构建一个二进制的分发包。
-bdist_egg - 构建一个 egg 分发包，经常用来替代基于 bdist 生成的模式
-
-2. 上传
-https://twine.readthedocs.io/en/latest/#installation
-twine upload -u kingreatwill -p x dist/*
-twine upload dist/*
-"""
-if __name__ == "__main__":
-    setuptools.setup(
-        name="pygitee",
-        version=version,
-        description="Use the full gitee API v5",
-        author="kingreatwill",
-        author_email="kingreatwill@qq.com",
-        url="https://gitee.com/kingreatwill/pygitee",
-        packages=["gitee"],
-        long_description=long_description,
-        long_description_content_type="text/markdown",
-        classifiers=[
-            "Programming Language :: Python :: 3",
-            "License :: OSI Approved :: MIT License",
-            "Operating System :: OS Independent",
-        ],
-        python_requires=">=3.6",
-    )
+setup(
+    name=NAME,
+    version=VERSION,
+    description="码云 Open API",
+    author_email="",
+    url="https://gitee.com/kingreatwill/pygitee",
+    keywords=["Swagger", "码云 Open API"],
+    install_requires=REQUIRES,
+    packages=["gitee"],
+    include_package_data=True,
+    long_description=long_description,
+    long_description_content_type="text/markdown",
+)
