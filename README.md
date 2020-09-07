@@ -5,7 +5,7 @@ pygitee 是封装了gitee的OpenAPI的python库.
 
 #### 安装教程
 pip install pygitee
-
+> https://pypi.org/project/pygitee/
 #### 使用说明
 
 ```python

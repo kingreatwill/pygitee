@@ -9,7 +9,7 @@ class Issue(GiteeObject):
 
     # 仓库的某个Issue
     def repos_owner_repo_issues_one_url(self, owner, repo, number):
-        return self.repos_owner_repo_issues_url(owner=owner, repo=repo) + '/' + number
+        return '/repos/{owner}/{repo}/issues/{number}'.format(owner=owner, repo=repo, number=number)
 
     # 创建Issue
     def repos_owner_issues_url(self, owner):
@@ -17,7 +17,11 @@ class Issue(GiteeObject):
 
     # 更新Issue
     def repos_owner_issues_update_url(self, owner, number):
-        return self.repos_owner_issues_url(owner=owner) + '/' + number
+        return '/repos/{owner}/issues/{number}'.format(owner=owner, number=number)
+
+    # 获取某个Issue下的操作日志
+    def repos_owner_issues_number_operate_logs_url(self, owner, number):
+        return '/repos/{owner}/issues/{number}/operate_logs'.format(owner=owner, number=number)
 
     def list(self, owner, repo, state='open', sort='created', direction='desc', page=1, per_page=0,
              **kwargs) -> Response:
@@ -95,3 +99,24 @@ class Issue(GiteeObject):
         """
         args = core.params(locals())
         return self.do_patch(self.repos_owner_issues_update_url(owner, number), args)
+
+    def get_logs(self, owner, repo, number, sort='desc'):
+        """getV5ReposOwnerIssuesNumberOperateLogs
+
+        :calls: `GET /repos/{owner}/issues/{number}/operate_logs`
+        :param owner: 仓库所属空间地址(企业、组织或个人的地址path)
+        :type owner: str
+        :param repo: 仓库路径(path)
+        :type repo: str
+        :param number: Issue 编号(区分大小写，无需添加 # 号)
+        :type number: str
+        :param sort: 按递增(asc)或递减(desc)排序，默认：递减
+        :type sort: str
+        :return: :class:`Response <Response>` object
+        :rtype: Response
+        """
+        args = core.params(locals())
+        return self.do_get(self.repos_owner_issues_number_operate_logs_url(owner, number), args)
+
+    # 别名定义;
+    getV5ReposOwnerRepoIssues = list
