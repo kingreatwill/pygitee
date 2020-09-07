@@ -5,7 +5,7 @@ from setuptools import setup  # noqa: H301
 
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
-NAME = "gitee"
+NAME = "pygitee"
 VERSION = "1.0.0"
 # To install the library, run the following
 #
