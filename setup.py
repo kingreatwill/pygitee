@@ -1,16 +1,22 @@
-import textwrap
-
 import setuptools
+
+with open("README.md", "r", encoding="utf-8") as fh:
+    long_description = fh.read()
 
 version = "0.1"
 
 """
+https://docs.python.org/3/distutils/configfile.html
 1. 打包
-python setup.py sdist
+python setup.py sdist bdist_wheel
+sdist - 构建源码分发包，在 Windows 下为 zip 格式，Linux 下为 tag.gz 格式 。
+bdist - 构建一个二进制的分发包。
+bdist_egg - 构建一个 egg 分发包，经常用来替代基于 bdist 生成的模式
 
 2. 上传
-python setup.py sdist upload
-
+https://twine.readthedocs.io/en/latest/#installation
+twine upload -u kingreatwill -p x dist/*
+twine upload dist/*
 """
 if __name__ == "__main__":
     setuptools.setup(
@@ -20,36 +26,13 @@ if __name__ == "__main__":
         author="kingreatwill",
         author_email="kingreatwill@qq.com",
         url="https://gitee.com/kingreatwill/pygitee",
-        long_description=textwrap.dedent(
-            """\
-            (Very short) Tutorial
-            =====================
-            First create a Github instance::
-                from github import Github
-                # using username and password
-                g = Github("user", "password")
-                # or using an access token
-                g = Github("access_token")
-            Then play with your Github objects::
-                for repo in g.get_user().get_repos():
-                    print(repo.name)
-                    repo.edit(has_wiki=False)
-            Reference documentation
-            =======================
-            See https://gitee.com/kingreatwill/pygitee/"""
-        ),
         packages=["gitee"],
+        long_description=long_description,
+        long_description_content_type="text/markdown",
         classifiers=[
-            "Programming Language :: Python",
             "Programming Language :: Python :: 3",
-            "Programming Language :: Python :: 3.5",
-            "Programming Language :: Python :: 3.6",
-            "Programming Language :: Python :: 3.7",
-            "Programming Language :: Python :: 3.8",
-            "Topic :: Software Development",
+            "License :: OSI Approved :: MIT License",
+            "Operating System :: OS Independent",
         ],
-        python_requires=">=3.5",
-        install_requires=["deprecated", "pyjwt", "requests>=2.24.0"],
-        extras_require={"integrations": ["cryptography"]},
-        tests_require=["cryptography", "httpretty>=0.9.6"],
+        python_requires=">=3.6",
     )

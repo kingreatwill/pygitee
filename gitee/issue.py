@@ -1,5 +1,3 @@
-import requests
-
 from gitee import core
 from gitee.gitee_object import GiteeObject, Response
 
