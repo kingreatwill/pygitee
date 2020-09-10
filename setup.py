@@ -1,12 +1,12 @@
 # coding: utf-8
 
 
-from setuptools import setup  # noqa: H301
+from setuptools import setup, find_packages  # noqa: H301
 
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 NAME = "pygitee"
-VERSION = "1.0.0"
+VERSION = "1.0.1"
 # To install the library, run the following
 #
 # python setup.py install
@@ -24,8 +24,9 @@ setup(
     url="https://gitee.com/kingreatwill/pygitee",
     keywords=["Swagger", "码云 Open API"],
     install_requires=REQUIRES,
-    packages=["gitee"],
+    packages=find_packages(),
     include_package_data=True,
+    zip_safe=True,
     long_description=long_description,
     long_description_content_type="text/markdown",
 )
